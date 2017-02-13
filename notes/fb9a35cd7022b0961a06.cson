@@ -1,0 +1,20 @@
+type: "MARKDOWN_NOTE"
+folder: "6bbad89fea6bdd37e6cc"
+title: "Time"
+content: '''
+  # Time
+  
+  - 把time parse成字串的時候，golang是給一個layout字串，把timestamp follow layout的規則去parse。
+  - 需要用golang 原本使用的layout時間 2006-01-02T15:04:05.000-0700
+  - 小數點會不會被省略是看layout字串最後小數點位置是帶0或9， stdFracSecond0 // ".0", ".00", ... , trailing zeros included; stdFracSecond9 // ".9", ".99", ..., trailing zeros omitted
+  
+  ```go
+  t.UTC().Format("2006-01-02T15:04:05.000Z07:00") //2012-12-01T14:35:00.820Z
+  
+  t.UTC().Format("2006-01-02T15:04:05.999Z07:00") //2012-12-01T14:35:00.82Z
+  ```
+'''
+tags: []
+isStarred: false
+createdAt: "2017-02-13T06:44:24.542Z"
+updatedAt: "2017-02-13T06:52:51.832Z"

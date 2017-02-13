@@ -1,0 +1,59 @@
+type: "MARKDOWN_NOTE"
+folder: "6bbad89fea6bdd37e6cc"
+title: "General"
+content: '''
+  # General
+  
+  - Share memory by communicating; don't communicate by sharing memory.
+  - 要共用(public)的變數就是首字大寫, (private)就小寫吧
+  - map is not concurrent safe, 要跨thread保證資料正確的話要自己加lock
+  - map is original reference type! So, it always passed by reference.
+  - := map 取出來的值是passed by value(是copy喔！)，所以放struct到map裏面需要注意
+  - golang常用的Deadline 指的是時間點(time.Time), Timeout指的是時間長度(time.Duration)，概念一樣只是input不同
+  - range出來的item是local/temp scope的, 如果要使用到這類local data的pointer的話必須使用傳統的for loop.(實際情況是range的pointer可能是一塊共用的temp memory, 所以pointer指向的address會被蓋掉)
+  https://tam7t.com/golang-range-and-pointers/
+  
+  ```go
+  // error
+  for k,v := range array{
+      a := &v
+  }
+  
+  // true
+  for i:=0; i < len(array);i++{
+      a := &array[i]
+  }
+  ```
+  - GO function call is passed by value(any custom struct)! (even use &x: copy address), it would be copy a value. 如下面範例, 你不能替換一個新的address by function call, 但是你可以在function裡面改動原本指向的物件.
+  - e.g.
+  
+  ```go
+  type User struct {
+  Name string
+  }
+  
+  
+  func Modify(u *User) {
+     u = &User{Name: "Paul"}
+  }
+  func RightModify(u *User){
+     u.Name = "Paul"
+  }
+  func main() {
+    u := &User{Name: "Leto"}
+    println(u.Name) //Leto
+    Modify(u)
+    println(u.Name)// Leto
+    RightModify(u)
+    println(u.Name)// Paul
+  }
+  ```
+  
+  - mgo: pipe = mongodb.aggregate  就是([{selector},{projection operators}]) =一次給query和projection的query
+'''
+tags: [
+  "general"
+]
+isStarred: false
+createdAt: "2017-02-13T06:42:34.559Z"
+updatedAt: "2017-02-13T06:53:12.577Z"
